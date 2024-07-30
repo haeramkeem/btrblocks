@@ -59,6 +59,9 @@ class TFrequency {
       // When the percentage of NULL value is higher then 90.
       col_struct.top_value = NULL_CODE;
     } else {
+      // @hk
+      // Find most frequent value
+      // and store it to the `col_struct.top_value`.
       col_struct.top_value = stats.distinct_values.begin()->first;
       u32 occurence_count = stats.distinct_values.begin()->second;
       for (const auto& t : stats.distinct_values) {
@@ -73,6 +76,9 @@ class TFrequency {
     Roaring exceptions_bitmap;
     for (u32 row_i = 0; row_i < stats.tuple_count; row_i++) {
       if (src[row_i] != col_struct.top_value && (nullmap == nullptr || nullmap[row_i])) {
+        // @hk
+        // Regard as exception when:
+        // The value is not `top_value` AND The entry is not `NULL`
         exceptions.push_back(src[row_i]);
         exceptions_bitmap.add(row_i);
       }
