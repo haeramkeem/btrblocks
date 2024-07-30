@@ -55,6 +55,8 @@ class TFrequency {
     auto& col_struct = *new (dest)(FrequencyStructure<NumberType>);
     // -------------------------------------------------------------------------------------
     if (CD(stats.null_count) * 100.0 / CD(stats.tuple_count) >= 90) {
+      // @hk
+      // When the percentage of NULL value is higher then 90.
       col_struct.top_value = NULL_CODE;
     } else {
       col_struct.top_value = stats.distinct_values.begin()->first;
